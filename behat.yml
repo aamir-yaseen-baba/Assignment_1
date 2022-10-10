@@ -1,0 +1,41 @@
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
+        - Drupal\DrupalExtension\Context\MarkupContext
+  extensions:
+    Drupal\MinkExtension:
+      goutte: ~
+      selenium2:
+        browser: chrome
+        wd_host: http://127.0.0.1:4444/wd/hub
+        capabilities:
+          extra_capabilities:
+            chromeOptions:
+              args:
+                - "--start-fullscreen"
+              w3c: false
+      browser_name: chrome
+      default_session: selenium2
+      base_url: https://mywebsite.ddev.site # Replace with your site's URL
+    Drupal\DrupalExtension:
+      selectors:
+        message_selector: '.messages'
+        error_message_selector: '.messages.messages--error'
+        success_message_selector: '.messages.messages--status'
+      blackbox: ~
+      api_driver: 'drupal'
+      drush:
+#        alias: 'local'
+        root: './web/'
+      drupal:
+        drupal_root: './web/'
+      region_map:
+        footer: ".footer"
+        header: ".layout-header"
+        content: ".layout-content"
